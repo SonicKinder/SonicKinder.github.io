@@ -1166,7 +1166,7 @@ footer .left { display: flex; gap: 24px; }
   </h2>
 
   <div class="contact-links">
-    <a href="#" id="discordCopy" data-tag=".LudKore" title="Click to copy .LudKore">Discord</a>
+    <a href="#" id="discordCopy" data-tag="LudKore" title="Click to copy LudKore">Discord</a>
     <a href="https://www.roblox.com/users/3046879581/profile" target="_blank" rel="noopener">Roblox</a>
     <a href="https://x.com/LudKore" target="_blank" rel="noopener">Twitter / X</a>
     <a href="mailto:LudKore@gmail.com">Email</a>
@@ -1245,7 +1245,7 @@ footer .left { display: flex; gap: 24px; }
 (function () {
   const link = document.getElementById('discordCopy');
   if (!link) return;
-  const tag = link.dataset.tag || '.LudKore';
+  const tag = link.dataset.tag || 'LudKore';
   let resetTimer = null;
   link.addEventListener('click', async (e) => {
     e.preventDefault();
