@@ -452,6 +452,7 @@ section {
 }
 
 .project-feature { grid-column: span 8; min-height: 480px; }
+.project-full { grid-column: span 12; min-height: 420px; }
 .project-half { grid-column: span 4; }
 .project-third { grid-column: span 4; }
 .project-wide { grid-column: span 6; }
@@ -478,7 +479,8 @@ section {
   z-index: 2;
 }
 
-.project-feature .project-title {
+.project-feature .project-title,
+.project-full .project-title {
   font-size: clamp(40px, 4.5vw, 84px);
 }
 
@@ -736,6 +738,56 @@ footer {
 
 footer .left { display: flex; gap: 24px; }
 
+/* ============== SCROLL TO TOP ============== */
+.scroll-top {
+  position: fixed;
+  bottom: 24px;
+  right: 60px;
+  height: 40px;
+  padding: 0 16px;
+  border: 1px solid var(--border-bright);
+  background: rgba(17, 17, 17, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: var(--text-dim);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  z-index: 60;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px);
+  transition: opacity 0.3s ease, transform 0.3s ease, background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.scroll-top.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.scroll-top:hover {
+  background: var(--text);
+  color: var(--bg);
+  border-color: var(--text);
+}
+
+.scroll-top .arr {
+  font-size: 14px;
+  letter-spacing: 0;
+  display: inline-block;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 900px) {
+  .scroll-top { right: 16px; bottom: 16px; }
+}
+
 /* ============== ANIMATIONS ============== */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(24px); }
@@ -768,8 +820,9 @@ footer .left { display: flex; gap: 24px; }
   .about-grid { grid-template-columns: 1fr; gap: 32px; }
   .about-side { position: static; }
   .works-grid { grid-template-columns: 1fr; }
-  .project-feature, .project-half, .project-third, .project-wide { grid-column: span 1; }
+  .project-feature, .project-full, .project-half, .project-third, .project-wide { grid-column: span 1; }
   .project-feature { min-height: 360px; }
+  .project-full { min-height: 320px; }
   .skills-grid { grid-template-columns: 1fr; }
   .skill { grid-template-columns: 1fr; gap: 12px; }
   .marquee-track span { font-size: 24px; margin-right: 24px; }
@@ -782,7 +835,7 @@ footer .left { display: flex; gap: 24px; }
 <header class="topbar">
   <div class="logo">
     <span class="square"></span>
-    <span>YOUR&nbsp;NAME / DEV</span>
+    <span>LUDKORE / ONLINE</span>
   </div>
   <nav>
     <a href="#index" data-num="01">Index</a>
@@ -792,7 +845,7 @@ footer .left { display: flex; gap: 24px; }
   </nav>
   <div class="status">
     <span class="live-dot"></span>
-    <span>Available</span>
+    <span>—</span>
   </div>
 </header>
 
@@ -838,7 +891,7 @@ footer .left { display: flex; gap: 24px; }
       </div>
       <div class="meta-cell">
         <div class="label">Stack</div>
-        <div class="value">Luau&nbsp;·&nbsp;Roblox&nbsp;Studio</div>
+        <div class="value">Luau&nbsp;·&nbsp;Studio&nbsp;·&nbsp;Blender&nbsp;·&nbsp;VS Code</div>
       </div>
       <div class="meta-cell">
         <div class="label">Achievements</div>
@@ -886,16 +939,22 @@ footer .left { display: flex; gap: 24px; }
       <div>Animation Logic</div>
       <br>
       <div><span class="key">→</span> Range</div>
-      <div>Obby · Round-based</div>
-      <div>Sports · Casual</div>
+      <div>Obby · Climb · Action</div>
+      <div>Sports · Round-based</div>
+      <div>Casual · Social</div>
+      <br>
+      <div><span class="key">→</span> Studios</div>
+      <div>Pulse Interactive</div>
+      <div>Hammershark Studio</div>
+      <div>2x2 Studio</div>
+      <div>Mecha Labs</div>
     </div>
 
     <div class="about-text">
-      I&rsquo;ve shipped across <em>obbies</em>, <em>round-based games</em>, and <em>casual experiences</em> — building gameplay
-      that <span class="underline">feels right</span> in the hand and UI that doesn&rsquo;t get in the way.
-      Some of the games I&rsquo;ve worked on have hit the Roblox <em>front page</em>.
-      My favorite problems sit at the intersection of <em>movement</em>, <em>feel</em>, and the small details
-      that turn a working prototype into something players actually want to keep playing.
+      I&rsquo;ve worked on a lot of <em>obbies</em> and <em>casual games</em>.
+      Making gameplay <span class="underline">feel right</span> — exactly how you want it — is my primary task.
+      A couple of the games I&rsquo;ve worked on have reached the <em>front page</em>.
+      I&rsquo;m able to turn prototypes and ideas into games that <em>thousands</em> of players want to play.
     </div>
   </div>
 </section>
@@ -907,8 +966,8 @@ footer .left { display: flex; gap: 24px; }
 
   <div class="works-grid">
 
-    <!-- Wall Rush — featured -->
-    <a href="#" class="project project-feature">
+    <!-- Wall Rush — full width -->
+    <a href="https://www.roblox.com/games/106489232698176/Wall-Rush-Obby" target="_blank" rel="noopener" class="project project-full">
       <div class="viz viz-walls"></div>
       <div class="project-num">[ 01 ] — Programmer</div>
       <div class="project-spacer"></div>
@@ -921,18 +980,17 @@ footer .left { display: flex; gap: 24px; }
         <div class="project-tags">
           <span class="project-tag front">Front Page</span>
           <span class="project-tag">Programmer</span>
-          <span class="project-tag dim">Movement</span>
         </div>
-        <span>2024 — Roblox</span>
+        <span>Released 02 / 14 / 2025</span>
       </div>
     </a>
 
-    <!-- Unicycle Obby -->
-    <a href="#" class="project project-half">
+    <!-- Unicycle Obby — full width -->
+    <a href="https://www.roblox.com/games/135119450604262/Unicycle-Obby" target="_blank" rel="noopener" class="project project-full">
       <div class="viz viz-circles"></div>
       <div class="project-num">[ 02 ] — Programmer</div>
       <div class="project-spacer"></div>
-      <h3 class="project-title">Unicycle <em class="serif">Obby</em></h3>
+      <h3 class="project-title">Unicycle <em>Obby</em></h3>
       <p class="project-desc">
         Physics-driven obby built around a single unicycle vehicle. Custom controller and balance feel.
       </p>
@@ -941,12 +999,12 @@ footer .left { display: flex; gap: 24px; }
           <span class="project-tag">Programmer</span>
           <span class="project-tag dim">Physics</span>
         </div>
-        <span>Roblox</span>
+        <span>Released 12 / 03 / 2025</span>
       </div>
     </a>
 
     <!-- +1 Pogo Jump Climb -->
-    <a href="#" class="project project-third">
+    <a href="https://www.roblox.com/games/94273830020274/1-Jump-Pogo-Climb" target="_blank" rel="noopener" class="project project-third">
       <div class="viz viz-zigzag"></div>
       <div class="project-num">[ 03 ] — Programmer</div>
       <div class="project-spacer"></div>
@@ -957,17 +1015,18 @@ footer .left { display: flex; gap: 24px; }
       <div class="project-meta-row">
         <div class="project-tags">
           <span class="project-tag">Programmer</span>
+          <span class="project-tag dim">Climb</span>
         </div>
-        <span>Roblox</span>
+        <span>02 / 09 / 2026</span>
       </div>
     </a>
 
     <!-- Steal an Emoji -->
-    <a href="#" class="project project-third">
+    <a href="https://www.roblox.com/games/121508414077627/Steal-an-Emoji" target="_blank" rel="noopener" class="project project-third">
       <div class="viz viz-dots"></div>
       <div class="project-num">[ 04 ] — Contributor</div>
       <div class="project-spacer"></div>
-      <h3 class="project-title">Steal an <em class="serif">Emoji</em></h3>
+      <h3 class="project-title">Steal an <em>Emoji</em></h3>
       <p class="project-desc">
         Round-based social gameplay. Contributed to systems and polish.
       </p>
@@ -976,12 +1035,12 @@ footer .left { display: flex; gap: 24px; }
           <span class="project-tag">Contributor</span>
           <span class="project-tag dim">Systems</span>
         </div>
-        <span>Roblox</span>
+        <span>06 / 17 / 2025</span>
       </div>
     </a>
 
     <!-- Ping Pong -->
-    <a href="#" class="project project-third">
+    <a href="https://www.roblox.com/games/139874105014722/Ping-Pong" target="_blank" rel="noopener" class="project project-third">
       <div class="viz viz-line"></div>
       <div class="project-num">[ 05 ] — Contributor</div>
       <div class="project-spacer"></div>
@@ -991,18 +1050,19 @@ footer .left { display: flex; gap: 24px; }
       </p>
       <div class="project-meta-row">
         <div class="project-tags">
+          <span class="project-tag front">Front Page</span>
           <span class="project-tag">Contributor</span>
         </div>
-        <span>Roblox</span>
+        <span>01 / 02 / 2026</span>
       </div>
     </a>
 
-    <!-- More work -->
-    <a href="#" class="project project-third">
+    <!-- More work — full width -->
+    <a href="#" class="project project-full">
       <div class="viz viz-grid-pattern"></div>
       <div class="project-num">[ 06 ] — Various</div>
       <div class="project-spacer"></div>
-      <h3 class="project-title">&amp; more <em class="serif">work</em></h3>
+      <h3 class="project-title">&amp; more <em>work</em></h3>
       <p class="project-desc">
         Additional commissioned projects, prototypes, and contributions across Roblox.
         Available on request.
@@ -1106,16 +1166,16 @@ footer .left { display: flex; gap: 24px; }
   </h2>
 
   <div class="contact-links">
-    <a href="#">Discord</a>
-    <a href="#">Roblox</a>
-    <a href="#">Twitter / X</a>
-    <a href="#">Email</a>
+    <a href="#" id="discordCopy" data-tag=".LudKore" title="Click to copy .LudKore">Discord</a>
+    <a href="https://www.roblox.com/users/3046879581/profile" target="_blank" rel="noopener">Roblox</a>
+    <a href="https://x.com/LudKore" target="_blank" rel="noopener">Twitter / X</a>
+    <a href="mailto:LudKore@gmail.com">Email</a>
   </div>
 </section>
 
 <footer>
   <div class="left">
-    <span>© YOUR NAME — 2026</span>
+    <span>© LUDKORE — 2026</span>
     <span>Built solo / Luau native</span>
   </div>
   <div>v1.0 / Last updated &nbsp;—&nbsp; All systems operational</div>
@@ -1123,16 +1183,23 @@ footer .left { display: flex; gap: 24px; }
 
 </main>
 
+<!-- Scroll to top -->
+<button class="scroll-top" id="scrollTop" type="button" aria-label="Scroll to top">
+  <span class="arr">↑</span>
+  <span>Top</span>
+</button>
+
 <script>
-// Live clock in the topbar (subtle technical detail)
+// Live clock in the topbar — GMT+5
 (function () {
   const status = document.querySelector('.topbar .status span:last-child');
   if (!status) return;
   function tick() {
     const d = new Date();
-    const hh = String(d.getUTCHours()).padStart(2, '0');
-    const mm = String(d.getUTCMinutes()).padStart(2, '0');
-    status.textContent = 'Available · ' + hh + ':' + mm + ' UTC';
+    const totalMin = d.getUTCHours() * 60 + d.getUTCMinutes() + 5 * 60;
+    const hh = String(Math.floor((totalMin / 60) % 24)).padStart(2, '0');
+    const mm = String(totalMin % 60).padStart(2, '0');
+    status.textContent = hh + ':' + mm + ' GMT+5';
   }
   tick();
   setInterval(tick, 30000);
@@ -1155,6 +1222,49 @@ footer .left { display: flex; gap: 24px; }
     el.style.opacity = '0';
     el.style.transform = 'translateY(20px)';
     io.observe(el);
+  });
+})();
+
+// Scroll-to-top button — fade in after scrolling past hero
+(function () {
+  const btn = document.getElementById('scrollTop');
+  if (!btn) return;
+  const threshold = () => window.innerHeight * 0.6;
+  function update() {
+    if (window.scrollY > threshold()) btn.classList.add('visible');
+    else btn.classList.remove('visible');
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+  btn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+})();
+
+// Discord copy-to-clipboard
+(function () {
+  const link = document.getElementById('discordCopy');
+  if (!link) return;
+  const tag = link.dataset.tag || '.LudKore';
+  let resetTimer = null;
+  link.addEventListener('click', async (e) => {
+    e.preventDefault();
+    try {
+      await navigator.clipboard.writeText(tag);
+    } catch (err) {
+      // Fallback: temporary textarea
+      const ta = document.createElement('textarea');
+      ta.value = tag;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); } catch (_) {}
+      document.body.removeChild(ta);
+    }
+    link.textContent = 'Copied ' + tag;
+    if (resetTimer) clearTimeout(resetTimer);
+    resetTimer = setTimeout(() => { link.textContent = 'Discord'; }, 2000);
   });
 })();
 </script>
