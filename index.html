@@ -2082,6 +2082,17 @@ body.game-view .marquee-wrap { display: none; }
 (function () {
   const pages = document.querySelectorAll('.game-page');
   const body = document.body;
+  const html = document.documentElement;
+
+  // Performs an instant scroll-to-top, bypassing CSS scroll-behavior: smooth
+  function jumpToTop() {
+    const prev = html.style.scrollBehavior;
+    html.style.scrollBehavior = 'auto';
+    window.scrollTo(0, 0);
+    requestAnimationFrame(() => {
+      html.style.scrollBehavior = prev;
+    });
+  }
 
   function applyRoute() {
     const hash = window.location.hash;
@@ -2096,7 +2107,7 @@ body.game-view .marquee-wrap { display: none; }
       if (page) {
         body.classList.add('game-view');
         page.classList.add('active');
-        window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
+        jumpToTop();
         return;
       }
     }
@@ -2117,7 +2128,7 @@ body.game-view .marquee-wrap { display: none; }
       history.pushState('', document.title, window.location.pathname);
       body.classList.remove('game-view');
       pages.forEach(p => p.classList.remove('active'));
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      jumpToTop();
     });
   });
 
@@ -2128,7 +2139,9 @@ body.game-view .marquee-wrap { display: none; }
       history.pushState('', document.title, window.location.pathname);
       body.classList.remove('game-view');
       pages.forEach(p => p.classList.remove('active'));
-      // Wait a frame for layout to update, then scroll
+      // Jump instantly first to clear any leftover scroll position from the game page,
+      // then smooth-scroll to the contact section once layout settles.
+      jumpToTop();
       requestAnimationFrame(() => {
         const contact = document.getElementById('contact');
         if (contact) contact.scrollIntoView({ behavior: 'smooth' });
