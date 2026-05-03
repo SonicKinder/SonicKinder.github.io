@@ -80,18 +80,44 @@ body::after {
 }
 
 .topbar .logo {
-  font-weight: 600;
+  font-family: 'Geist', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: -0.02em;
+  text-transform: none;
   margin-right: auto;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 14px;
+  background: none;
+  border: none;
+  color: var(--text);
+  cursor: pointer;
+  padding: 0;
+  transition: opacity 0.2s;
 }
+
+.topbar .logo:hover { opacity: 0.7; }
 
 .topbar .logo .square {
   display: inline-block;
   width: 10px;
   height: 10px;
   background: var(--text);
+}
+
+.topbar .logo .slash {
+  color: var(--text-faint);
+  font-weight: 400;
+}
+
+.topbar .logo .online {
+  color: var(--text-dim);
+  font-weight: 500;
+  font-size: 11px;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
 }
 
 .topbar nav {
@@ -429,6 +455,38 @@ section {
   color: inherit;
 }
 
+/* Background image layer (darkened + blurred) */
+.project-bg {
+  position: absolute;
+  inset: -20px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: blur(6px) brightness(0.3) saturate(0.85);
+  opacity: 0.7;
+  z-index: 0;
+  transition: filter 0.5s ease, opacity 0.5s ease, transform 0.5s ease;
+}
+
+.project:hover .project-bg {
+  filter: blur(4px) brightness(0.45) saturate(1);
+  opacity: 0.9;
+  transform: scale(1.03);
+}
+
+/* Top-down dark overlay so text always reads */
+.project::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(180deg,
+    rgba(10,10,10,0.4) 0%,
+    rgba(10,10,10,0.65) 60%,
+    rgba(10,10,10,0.85) 100%);
+  pointer-events: none;
+}
+
 .project:hover {
   border-color: var(--text);
   background: var(--surface-2);
@@ -537,6 +595,7 @@ section {
   inset: 0;
   pointer-events: none;
   opacity: 0.18;
+  z-index: 1;
   transition: opacity 0.4s;
 }
 .project:hover .viz { opacity: 0.35; }
@@ -738,6 +797,360 @@ footer {
 
 footer .left { display: flex; gap: 24px; }
 
+/* ============== GAME DETAIL PAGE ============== */
+.game-page {
+  display: none;
+  padding: 100px 40px 80px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  min-height: 100vh;
+}
+
+body.game-view main > section { display: none; }
+body.game-view .game-page.active { display: block; }
+body.game-view footer { display: none; }
+body.game-view .marquee-wrap { display: none; }
+
+.game-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  text-decoration: none;
+  padding: 10px 16px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  margin-bottom: 64px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.game-back:hover {
+  background: var(--text);
+  color: var(--bg);
+  border-color: var(--text);
+}
+
+.game-back .arr { font-size: 14px; letter-spacing: 0; }
+
+.game-hero {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 60px;
+  align-items: stretch;
+  margin-bottom: 100px;
+}
+
+.game-thumb {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  overflow: hidden;
+}
+
+.game-thumb-img {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.6s ease;
+}
+
+.game-thumb:hover .game-thumb-img { transform: scale(1.04); }
+
+.game-thumb::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 50%, rgba(10,10,10,0.6) 100%);
+  pointer-events: none;
+}
+
+.game-thumb-fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Geist', sans-serif;
+  font-weight: 700;
+  font-size: 72px;
+  letter-spacing: -0.04em;
+  color: var(--text-faint);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.game-info { display: flex; flex-direction: column; }
+
+.game-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 24px;
+}
+
+.game-title {
+  font-family: 'Geist', sans-serif;
+  font-weight: 800;
+  font-size: clamp(48px, 6vw, 96px);
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  margin-bottom: 24px;
+}
+
+.game-title em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--text-dim);
+}
+
+.game-desc {
+  font-family: 'Geist', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-dim);
+  margin-bottom: 32px;
+}
+
+.game-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-bottom: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+
+.game-meta-grid .label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 6px;
+}
+
+.game-meta-grid .value {
+  font-family: 'Geist', sans-serif;
+  font-size: 14px;
+  color: var(--text);
+}
+
+.game-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 32px; }
+
+.game-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 22px 28px;
+  background: var(--text);
+  color: var(--bg);
+  text-decoration: none;
+  font-family: 'Geist', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: -0.01em;
+  transition: all 0.2s;
+  margin-top: auto;
+  border: 1px solid var(--text);
+}
+
+.game-cta:hover {
+  background: transparent;
+  color: var(--text);
+}
+
+.game-cta .arr {
+  font-size: 20px;
+  transition: transform 0.2s;
+}
+
+.game-cta:hover .arr { transform: translate(4px, -4px); }
+
+/* Reviews */
+.reviews-section { margin-bottom: 100px; }
+
+.reviews-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 48px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.reviews-heading h2 {
+  font-family: 'Geist', sans-serif;
+  font-weight: 700;
+  font-size: clamp(32px, 4vw, 56px);
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.reviews-heading h2 em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--text-dim);
+}
+
+.reviews-heading .count {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.review {
+  background: var(--bg);
+  padding: 36px 32px;
+  display: flex;
+  flex-direction: column;
+  transition: background 0.3s;
+}
+
+.review:hover { background: var(--surface); }
+
+.review-quote-mark {
+  font-family: 'Geist', sans-serif;
+  font-size: 56px;
+  line-height: 0.6;
+  color: var(--text-faint);
+  margin-bottom: 8px;
+  font-weight: 800;
+}
+
+.review-quote {
+  font-family: 'Geist', sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--text);
+  margin-bottom: 28px;
+  flex: 1;
+}
+
+.review-author {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-top: 20px;
+  border-top: 1px dashed var(--border-bright);
+}
+
+.review-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--surface-2);
+  border: 1px solid var(--border-bright);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Geist', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--text);
+  flex-shrink: 0;
+}
+
+.review-meta { display: flex; flex-direction: column; }
+
+.review-name {
+  font-family: 'Geist', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+
+.review-role {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-top: 3px;
+}
+
+/* Game page contact CTA */
+.game-contact-cta {
+  border: 1px solid var(--border);
+  padding: 64px 48px;
+  text-align: center;
+  background: var(--surface);
+}
+
+.game-contact-cta .eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 16px;
+}
+
+.game-contact-cta h3 {
+  font-family: 'Geist', sans-serif;
+  font-weight: 700;
+  font-size: clamp(28px, 3.5vw, 48px);
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  margin-bottom: 28px;
+}
+
+.game-contact-cta h3 em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--text-dim);
+}
+
+.game-contact-cta .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 28px;
+  background: var(--text);
+  color: var(--bg);
+  text-decoration: none;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  border: 1px solid var(--text);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.game-contact-cta .btn:hover {
+  background: transparent;
+  color: var(--text);
+}
+
+@media (max-width: 900px) {
+  .game-page { padding: 80px 24px 60px; }
+  .game-hero { grid-template-columns: 1fr; gap: 32px; }
+  .reviews-grid { grid-template-columns: 1fr; }
+  .game-meta-grid { grid-template-columns: 1fr; }
+  .game-contact-cta { padding: 40px 24px; }
+}
+
 /* ============== SCROLL TO TOP ============== */
 .scroll-top {
   position: fixed;
@@ -833,10 +1246,12 @@ footer .left { display: flex; gap: 24px; }
 
 <!-- ============== TOP BAR ============== -->
 <header class="topbar">
-  <div class="logo">
+  <button class="logo" id="logoTop" type="button" aria-label="Scroll to top">
     <span class="square"></span>
-    <span>LUDKORE / ONLINE</span>
-  </div>
+    <span>LudKore</span>
+    <span class="slash">/</span>
+    <span class="online">Online</span>
+  </button>
   <nav>
     <a href="#index" data-num="01">Index</a>
     <a href="#works" data-num="02">Works</a>
@@ -965,10 +1380,30 @@ footer .left { display: flex; gap: 24px; }
 
   <div class="works-grid">
 
-    <!-- Wall Rush / full width -->
-    <a href="https://www.roblox.com/games/106489232698176/Wall-Rush-Obby" target="_blank" rel="noopener" class="project project-full">
-      <div class="viz viz-walls"></div>
+    <!-- +1 Pogo Jump Climb / full width -->
+    <a href="#game/pogo" class="project project-full" data-game="pogo">
+      <div class="project-bg" style="background-image: url('images/pogo.jpg');"></div>
+      <div class="viz viz-zigzag"></div>
       <div class="project-num">[ 01 ] / Programmer</div>
+      <div class="project-spacer"></div>
+      <h3 class="project-title">+1 Pogo<br>Jump Climb</h3>
+      <p class="project-desc">
+        Vertical climb game with bouncing mechanics and progression scaling.
+      </p>
+      <div class="project-meta-row">
+        <div class="project-tags">
+          <span class="project-tag">Programmer</span>
+          <span class="project-tag dim">Climb</span>
+        </div>
+        <span>Released 02 / 09 / 2026</span>
+      </div>
+    </a>
+
+    <!-- Wall Rush / half width -->
+    <a href="#game/wallrush" class="project project-wide" data-game="wallrush">
+      <div class="project-bg" style="background-image: url('images/wallrush.jpg');"></div>
+      <div class="viz viz-walls"></div>
+      <div class="project-num">[ 02 ] / Programmer</div>
       <div class="project-spacer"></div>
       <h3 class="project-title">Wall<br>Rush.</h3>
       <p class="project-desc">
@@ -984,10 +1419,11 @@ footer .left { display: flex; gap: 24px; }
       </div>
     </a>
 
-    <!-- Unicycle Obby / full width -->
-    <a href="https://www.roblox.com/games/135119450604262/Unicycle-Obby" target="_blank" rel="noopener" class="project project-full">
+    <!-- Unicycle Obby / half width -->
+    <a href="#game/unicycle" class="project project-wide" data-game="unicycle">
+      <div class="project-bg" style="background-image: url('images/unicycle.jpg');"></div>
       <div class="viz viz-circles"></div>
-      <div class="project-num">[ 02 ] / Programmer</div>
+      <div class="project-num">[ 03 ] / Programmer</div>
       <div class="project-spacer"></div>
       <h3 class="project-title">Unicycle <em>Obby</em></h3>
       <p class="project-desc">
@@ -1002,26 +1438,9 @@ footer .left { display: flex; gap: 24px; }
       </div>
     </a>
 
-    <!-- +1 Pogo Jump Climb -->
-    <a href="https://www.roblox.com/games/94273830020274/1-Jump-Pogo-Climb" target="_blank" rel="noopener" class="project project-third">
-      <div class="viz viz-zigzag"></div>
-      <div class="project-num">[ 03 ] / Programmer</div>
-      <div class="project-spacer"></div>
-      <h3 class="project-title">+1 Pogo<br>Jump Climb</h3>
-      <p class="project-desc">
-        Vertical climb game with bouncing mechanics and progression scaling.
-      </p>
-      <div class="project-meta-row">
-        <div class="project-tags">
-          <span class="project-tag">Programmer</span>
-          <span class="project-tag dim">Climb</span>
-        </div>
-        <span>02 / 09 / 2026</span>
-      </div>
-    </a>
-
-    <!-- Steal an Emoji -->
-    <a href="https://www.roblox.com/games/121508414077627/Steal-an-Emoji" target="_blank" rel="noopener" class="project project-third">
+    <!-- Steal an Emoji / half width -->
+    <a href="#game/emoji" class="project project-wide" data-game="emoji">
+      <div class="project-bg" style="background-image: url('images/emoji.jpg');"></div>
       <div class="viz viz-dots"></div>
       <div class="project-num">[ 04 ] / Contributor</div>
       <div class="project-spacer"></div>
@@ -1034,12 +1453,13 @@ footer .left { display: flex; gap: 24px; }
           <span class="project-tag">Contributor</span>
           <span class="project-tag dim">Systems</span>
         </div>
-        <span>06 / 17 / 2025</span>
+        <span>Released 06 / 17 / 2025</span>
       </div>
     </a>
 
-    <!-- Ping Pong -->
-    <a href="https://www.roblox.com/games/139874105014722/Ping-Pong" target="_blank" rel="noopener" class="project project-third">
+    <!-- Ping Pong / half width -->
+    <a href="#game/pingpong" class="project project-wide" data-game="pingpong">
+      <div class="project-bg" style="background-image: url('images/pingpong.jpg');"></div>
       <div class="viz viz-line"></div>
       <div class="project-num">[ 05 ] / Contributor</div>
       <div class="project-spacer"></div>
@@ -1052,12 +1472,12 @@ footer .left { display: flex; gap: 24px; }
           <span class="project-tag front">Front Page</span>
           <span class="project-tag">Contributor</span>
         </div>
-        <span>01 / 02 / 2026</span>
+        <span>Released 01 / 02 / 2026</span>
       </div>
     </a>
 
     <!-- More work / full width -->
-    <a href="#" class="project project-full">
+    <a href="#contact" class="project project-full">
       <div class="viz viz-grid-pattern"></div>
       <div class="project-num">[ 06 ] / Various</div>
       <div class="project-spacer"></div>
@@ -1180,6 +1600,398 @@ footer .left { display: flex; gap: 24px; }
   <div>v1.0 / Last updated &nbsp;·&nbsp; All systems operational</div>
 </footer>
 
+<!-- ============== GAME DETAIL PAGES ============== -->
+
+<!-- +1 Pogo Jump Climb -->
+<section class="game-page" id="game-pogo" data-game="pogo">
+  <span class="section-label">Project / 01</span>
+  <button class="game-back" type="button" data-action="back-home">
+    <span class="arr">←</span>
+    <span>Back to portfolio</span>
+  </button>
+
+  <div class="game-hero">
+    <div class="game-thumb">
+      <div class="game-thumb-fallback">+1</div>
+      <div class="game-thumb-img" style="background-image: url('images/pogo.jpg');"></div>
+    </div>
+    <div class="game-info">
+      <div class="game-eyebrow">[ 01 ] / Programmer</div>
+      <h1 class="game-title">+1 Pogo<br>Jump <em>Climb</em></h1>
+      <p class="game-desc">
+        Vertical climb game with bouncing pogo mechanics and progression scaling. Players ascend
+        through increasingly tricky obstacles, each jump building on the last.
+      </p>
+      <div class="game-meta-grid">
+        <div><div class="label">Role</div><div class="value">Programmer</div></div>
+        <div><div class="label">Released</div><div class="value">02 / 09 / 2026</div></div>
+        <div><div class="label">Genre</div><div class="value">Climb / Obby</div></div>
+        <div><div class="label">Platform</div><div class="value">Roblox</div></div>
+      </div>
+      <div class="game-tags">
+        <span class="project-tag">Programmer</span>
+        <span class="project-tag dim">Climb</span>
+      </div>
+      <a href="https://www.roblox.com/games/94273830020274/1-Jump-Pogo-Climb" target="_blank" rel="noopener" class="game-cta">
+        <span>Play on Roblox</span>
+        <span class="arr">↗</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="reviews-section">
+    <div class="reviews-heading">
+      <h2>What the <em>team</em> says</h2>
+      <span class="count">[ 02 reviews ]</span>
+    </div>
+    <div class="reviews-grid">
+      <div class="review">
+        <div class="review-quote-mark">&ldquo;</div>
+        <p class="review-quote">[Placeholder review, replace with a real testimonial from a teammate or collaborator on this project.]</p>
+        <div class="review-author">
+          <div class="review-avatar">A</div>
+          <div class="review-meta">
+            <span class="review-name">Teammate Name</span>
+            <span class="review-role">Builder · +1 Pogo</span>
+          </div>
+        </div>
+      </div>
+      <div class="review">
+        <div class="review-quote-mark">&ldquo;</div>
+        <p class="review-quote">[Placeholder review, replace with a real testimonial from a teammate or collaborator on this project.]</p>
+        <div class="review-author">
+          <div class="review-avatar">B</div>
+          <div class="review-meta">
+            <span class="review-name">Teammate Name</span>
+            <span class="review-role">Modeler · +1 Pogo</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="game-contact-cta">
+    <div class="eyebrow">↓ &nbsp; Like what you see &nbsp; ↓</div>
+    <h3>Want to <em>work</em> together?</h3>
+    <button class="btn" type="button" data-action="back-contact">
+      <span>Get in touch</span>
+      <span>→</span>
+    </button>
+  </div>
+</section>
+
+<!-- Wall Rush -->
+<section class="game-page" id="game-wallrush" data-game="wallrush">
+  <span class="section-label">Project / 02</span>
+  <button class="game-back" type="button" data-action="back-home">
+    <span class="arr">←</span>
+    <span>Back to portfolio</span>
+  </button>
+
+  <div class="game-hero">
+    <div class="game-thumb">
+      <div class="game-thumb-fallback">WR</div>
+      <div class="game-thumb-img" style="background-image: url('images/wallrush.jpg');"></div>
+    </div>
+    <div class="game-info">
+      <div class="game-eyebrow">[ 02 ] / Programmer</div>
+      <h1 class="game-title">Wall <em>Rush</em></h1>
+      <p class="game-desc">
+        Fast-paced wall-running gameplay with tight movement systems and responsive controls.
+        Programmed gameplay loops and core mechanics from the ground up. Reached the Roblox front page.
+      </p>
+      <div class="game-meta-grid">
+        <div><div class="label">Role</div><div class="value">Programmer</div></div>
+        <div><div class="label">Released</div><div class="value">02 / 14 / 2025</div></div>
+        <div><div class="label">Genre</div><div class="value">Action / Obby</div></div>
+        <div><div class="label">Status</div><div class="value">Front Page</div></div>
+      </div>
+      <div class="game-tags">
+        <span class="project-tag front">Front Page</span>
+        <span class="project-tag">Programmer</span>
+      </div>
+      <a href="https://www.roblox.com/games/106489232698176/Wall-Rush-Obby" target="_blank" rel="noopener" class="game-cta">
+        <span>Play on Roblox</span>
+        <span class="arr">↗</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="reviews-section">
+    <div class="reviews-heading">
+      <h2>What the <em>team</em> says</h2>
+      <span class="count">[ 02 reviews ]</span>
+    </div>
+    <div class="reviews-grid">
+      <div class="review">
+        <div class="review-quote-mark">&ldquo;</div>
+        <p class="review-quote">[Placeholder review, replace with a real testimonial from a teammate or collaborator on this project.]</p>
+        <div class="review-author">
+          <div class="review-avatar">A</div>
+          <div class="review-meta">
+            <span class="review-name">Teammate Name</span>
+            <span class="review-role">Lead · Wall Rush</span>
+          </div>
+        </div>
+      </div>
+      <div class="review">
+        <div class="review-quote-mark">&ldquo;</div>
+        <p class="review-quote">[Placeholder review, replace with a real testimonial from a teammate or collaborator on this project.]</p>
+        <div class="review-author">
+          <div class="review-avatar">B</div>
+          <div class="review-meta">
+            <span class="review-name">Teammate Name</span>
+            <span class="review-role">Builder · Wall Rush</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="game-contact-cta">
+    <div class="eyebrow">↓ &nbsp; Like what you see &nbsp; ↓</div>
+    <h3>Want to <em>work</em> together?</h3>
+    <button class="btn" type="button" data-action="back-contact">
+      <span>Get in touch</span>
+      <span>→</span>
+    </button>
+  </div>
+</section>
+
+<!-- Unicycle Obby -->
+<section class="game-page" id="game-unicycle" data-game="unicycle">
+  <span class="section-label">Project / 03</span>
+  <button class="game-back" type="button" data-action="back-home">
+    <span class="arr">←</span>
+    <span>Back to portfolio</span>
+  </button>
+
+  <div class="game-hero">
+    <div class="game-thumb">
+      <div class="game-thumb-fallback">UO</div>
+      <div class="game-thumb-img" style="background-image: url('images/unicycle.jpg');"></div>
+    </div>
+    <div class="game-info">
+      <div class="game-eyebrow">[ 03 ] / Programmer</div>
+      <h1 class="game-title">Unicycle <em>Obby</em></h1>
+      <p class="game-desc">
+        Physics-driven obby built around a single unicycle vehicle. Custom controller and balance
+        feel that turns a simple concept into a deep mechanical challenge.
+      </p>
+      <div class="game-meta-grid">
+        <div><div class="label">Role</div><div class="value">Programmer</div></div>
+        <div><div class="label">Released</div><div class="value">12 / 03 / 2025</div></div>
+        <div><div class="label">Genre</div><div class="value">Physics / Obby</div></div>
+        <div><div class="label">Platform</div><div class="value">Roblox</div></div>
+      </div>
+      <div class="game-tags">
+        <span class="project-tag">Programmer</span>
+        <span class="project-tag dim">Physics</span>
+      </div>
+      <a href="https://www.roblox.com/games/135119450604262/Unicycle-Obby" target="_blank" rel="noopener" class="game-cta">
+        <span>Play on Roblox</span>
+        <span class="arr">↗</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="reviews-section">
+    <div class="reviews-heading">
+      <h2>What the <em>team</em> says</h2>
+      <span class="count">[ 02 reviews ]</span>
+    </div>
+    <div class="reviews-grid">
+      <div class="review">
+        <div class="review-quote-mark">&ldquo;</div>
+        <p class="review-quote">[Placeholder review, replace with a real testimonial from a teammate or collaborator on this project.]</p>
+        <div class="review-author">
+          <div class="review-avatar">A</div>
+          <div class="review-meta">
+            <span class="review-name">Teammate Name</span>
+            <span class="review-role">Lead · Unicycle Obby</span>
+          </div>
+        </div>
+      </div>
+      <div class="review">
+        <div class="review-quote-mark">&ldquo;</div>
+        <p class="review-quote">[Placeholder review, replace with a real testimonial from a teammate or collaborator on this project.]</p>
+        <div class="review-author">
+          <div class="review-avatar">B</div>
+          <div class="review-meta">
+            <span class="review-name">Teammate Name</span>
+            <span class="review-role">Builder · Unicycle Obby</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="game-contact-cta">
+    <div class="eyebrow">↓ &nbsp; Like what you see &nbsp; ↓</div>
+    <h3>Want to <em>work</em> together?</h3>
+    <button class="btn" type="button" data-action="back-contact">
+      <span>Get in touch</span>
+      <span>→</span>
+    </button>
+  </div>
+</section>
+
+<!-- Steal an Emoji -->
+<section class="game-page" id="game-emoji" data-game="emoji">
+  <span class="section-label">Project / 04</span>
+  <button class="game-back" type="button" data-action="back-home">
+    <span class="arr">←</span>
+    <span>Back to portfolio</span>
+  </button>
+
+  <div class="game-hero">
+    <div class="game-thumb">
+      <div class="game-thumb-fallback">SE</div>
+      <div class="game-thumb-img" style="background-image: url('images/emoji.jpg');"></div>
+    </div>
+    <div class="game-info">
+      <div class="game-eyebrow">[ 04 ] / Contributor</div>
+      <h1 class="game-title">Steal an <em>Emoji</em></h1>
+      <p class="game-desc">
+        Round-based social gameplay where players steal emojis from each other. Contributed to
+        gameplay systems and polish work.
+      </p>
+      <div class="game-meta-grid">
+        <div><div class="label">Role</div><div class="value">Contributor</div></div>
+        <div><div class="label">Released</div><div class="value">06 / 17 / 2025</div></div>
+        <div><div class="label">Genre</div><div class="value">Round-based / Social</div></div>
+        <div><div class="label">Platform</div><div class="value">Roblox</div></div>
+      </div>
+      <div class="game-tags">
+        <span class="project-tag">Contributor</span>
+        <span class="project-tag dim">Systems</span>
+      </div>
+      <a href="https://www.roblox.com/games/121508414077627/Steal-an-Emoji" target="_blank" rel="noopener" class="game-cta">
+        <span>Play on Roblox</span>
+        <span class="arr">↗</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="reviews-section">
+    <div class="reviews-heading">
+      <h2>What the <em>team</em> says</h2>
+      <span class="count">[ 02 reviews ]</span>
+    </div>
+    <div class="reviews-grid">
+      <div class="review">
+        <div class="review-quote-mark">&ldquo;</div>
+        <p class="review-quote">[Placeholder review, replace with a real testimonial from a teammate or collaborator on this project.]</p>
+        <div class="review-author">
+          <div class="review-avatar">A</div>
+          <div class="review-meta">
+            <span class="review-name">Teammate Name</span>
+            <span class="review-role">Lead · Steal an Emoji</span>
+          </div>
+        </div>
+      </div>
+      <div class="review">
+        <div class="review-quote-mark">&ldquo;</div>
+        <p class="review-quote">[Placeholder review, replace with a real testimonial from a teammate or collaborator on this project.]</p>
+        <div class="review-author">
+          <div class="review-avatar">B</div>
+          <div class="review-meta">
+            <span class="review-name">Teammate Name</span>
+            <span class="review-role">Builder · Steal an Emoji</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="game-contact-cta">
+    <div class="eyebrow">↓ &nbsp; Like what you see &nbsp; ↓</div>
+    <h3>Want to <em>work</em> together?</h3>
+    <button class="btn" type="button" data-action="back-contact">
+      <span>Get in touch</span>
+      <span>→</span>
+    </button>
+  </div>
+</section>
+
+<!-- Ping Pong -->
+<section class="game-page" id="game-pingpong" data-game="pingpong">
+  <span class="section-label">Project / 05</span>
+  <button class="game-back" type="button" data-action="back-home">
+    <span class="arr">←</span>
+    <span>Back to portfolio</span>
+  </button>
+
+  <div class="game-hero">
+    <div class="game-thumb">
+      <div class="game-thumb-fallback">PP</div>
+      <div class="game-thumb-img" style="background-image: url('images/pingpong.jpg');"></div>
+    </div>
+    <div class="game-info">
+      <div class="game-eyebrow">[ 05 ] / Contributor</div>
+      <h1 class="game-title">Ping <em>Pong</em></h1>
+      <p class="game-desc">
+        Sports-style table tennis gameplay. Contributed to gameplay polish and systems.
+        Reached the Roblox front page.
+      </p>
+      <div class="game-meta-grid">
+        <div><div class="label">Role</div><div class="value">Contributor</div></div>
+        <div><div class="label">Released</div><div class="value">01 / 02 / 2026</div></div>
+        <div><div class="label">Genre</div><div class="value">Sports / Casual</div></div>
+        <div><div class="label">Status</div><div class="value">Front Page</div></div>
+      </div>
+      <div class="game-tags">
+        <span class="project-tag front">Front Page</span>
+        <span class="project-tag">Contributor</span>
+      </div>
+      <a href="https://www.roblox.com/games/139874105014722/Ping-Pong" target="_blank" rel="noopener" class="game-cta">
+        <span>Play on Roblox</span>
+        <span class="arr">↗</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="reviews-section">
+    <div class="reviews-heading">
+      <h2>What the <em>team</em> says</h2>
+      <span class="count">[ 02 reviews ]</span>
+    </div>
+    <div class="reviews-grid">
+      <div class="review">
+        <div class="review-quote-mark">&ldquo;</div>
+        <p class="review-quote">[Placeholder review, replace with a real testimonial from a teammate or collaborator on this project.]</p>
+        <div class="review-author">
+          <div class="review-avatar">A</div>
+          <div class="review-meta">
+            <span class="review-name">Teammate Name</span>
+            <span class="review-role">Lead · Ping Pong</span>
+          </div>
+        </div>
+      </div>
+      <div class="review">
+        <div class="review-quote-mark">&ldquo;</div>
+        <p class="review-quote">[Placeholder review, replace with a real testimonial from a teammate or collaborator on this project.]</p>
+        <div class="review-author">
+          <div class="review-avatar">B</div>
+          <div class="review-meta">
+            <span class="review-name">Teammate Name</span>
+            <span class="review-role">Builder · Ping Pong</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="game-contact-cta">
+    <div class="eyebrow">↓ &nbsp; Like what you see &nbsp; ↓</div>
+    <h3>Want to <em>work</em> together?</h3>
+    <button class="btn" type="button" data-action="back-contact">
+      <span>Get in touch</span>
+      <span>→</span>
+    </button>
+  </div>
+</section>
+
 </main>
 
 <!-- Scroll to top -->
@@ -1264,6 +2076,78 @@ footer .left { display: flex; gap: 24px; }
     link.textContent = 'Copied ' + tag;
     if (resetTimer) clearTimeout(resetTimer);
     resetTimer = setTimeout(() => { link.textContent = 'Discord'; }, 2000);
+  });
+})();
+// Hash-based router for game detail pages
+(function () {
+  const pages = document.querySelectorAll('.game-page');
+  const body = document.body;
+
+  function applyRoute() {
+    const hash = window.location.hash;
+    const match = hash.match(/^#game\/(\w+)$/);
+
+    // Hide all game pages first
+    pages.forEach(p => p.classList.remove('active'));
+
+    if (match) {
+      const slug = match[1];
+      const page = document.getElementById('game-' + slug);
+      if (page) {
+        body.classList.add('game-view');
+        page.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
+        return;
+      }
+    }
+
+    // No match → main view
+    body.classList.remove('game-view');
+  }
+
+  window.addEventListener('hashchange', applyRoute);
+
+  // Run on load
+  applyRoute();
+
+  // Handle "back to portfolio" buttons
+  document.querySelectorAll('[data-action="back-home"]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      history.pushState('', document.title, window.location.pathname);
+      body.classList.remove('game-view');
+      pages.forEach(p => p.classList.remove('active'));
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+
+  // Handle "Get in touch" buttons → back to main, scroll to contact
+  document.querySelectorAll('[data-action="back-contact"]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      history.pushState('', document.title, window.location.pathname);
+      body.classList.remove('game-view');
+      pages.forEach(p => p.classList.remove('active'));
+      // Wait a frame for layout to update, then scroll
+      requestAnimationFrame(() => {
+        const contact = document.getElementById('contact');
+        if (contact) contact.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  });
+})();
+
+// Logo click → scroll to top (and exit game view if applicable)
+(function () {
+  const logo = document.getElementById('logoTop');
+  if (!logo) return;
+  logo.addEventListener('click', () => {
+    if (document.body.classList.contains('game-view')) {
+      history.pushState('', document.title, window.location.pathname);
+      document.body.classList.remove('game-view');
+      document.querySelectorAll('.game-page').forEach(p => p.classList.remove('active'));
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 })();
 </script>
