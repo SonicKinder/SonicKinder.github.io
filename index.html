@@ -1046,6 +1046,17 @@ body.game-view .marquee-wrap { display: none; }
   flex: 1;
 }
 
+.review-quote.pending {
+  color: var(--text-faint);
+  font-style: italic;
+  font-size: 15px;
+}
+
+.review.pending .review-quote-mark { opacity: 0.4; }
+.review.pending .review-name,
+.review.pending .review-role { color: var(--text-faint); }
+.review.pending .review-avatar { color: var(--text-faint); }
+
 .review-author {
   display: flex;
   align-items: center;
@@ -1383,7 +1394,6 @@ body.game-view .marquee-wrap { display: none; }
     <!-- +1 Pogo Jump Climb / full width -->
     <a href="#game/pogo" class="project project-full" data-game="pogo">
       <div class="project-bg" style="background-image: url('images/pogo.jpg');"></div>
-      <div class="viz viz-zigzag"></div>
       <div class="project-num">[ 01 ] / Programmer</div>
       <div class="project-spacer"></div>
       <h3 class="project-title">+1 Pogo<br>Jump Climb</h3>
@@ -1402,7 +1412,6 @@ body.game-view .marquee-wrap { display: none; }
     <!-- Wall Rush / half width -->
     <a href="#game/wallrush" class="project project-wide" data-game="wallrush">
       <div class="project-bg" style="background-image: url('images/wallrush.jpg');"></div>
-      <div class="viz viz-walls"></div>
       <div class="project-num">[ 02 ] / Programmer</div>
       <div class="project-spacer"></div>
       <h3 class="project-title">Wall<br>Rush.</h3>
@@ -1422,7 +1431,6 @@ body.game-view .marquee-wrap { display: none; }
     <!-- Unicycle Obby / half width -->
     <a href="#game/unicycle" class="project project-wide" data-game="unicycle">
       <div class="project-bg" style="background-image: url('images/unicycle.jpg');"></div>
-      <div class="viz viz-circles"></div>
       <div class="project-num">[ 03 ] / Programmer</div>
       <div class="project-spacer"></div>
       <h3 class="project-title">Unicycle <em>Obby</em></h3>
@@ -1441,7 +1449,6 @@ body.game-view .marquee-wrap { display: none; }
     <!-- Steal an Emoji / half width -->
     <a href="#game/emoji" class="project project-wide" data-game="emoji">
       <div class="project-bg" style="background-image: url('images/emoji.jpg');"></div>
-      <div class="viz viz-dots"></div>
       <div class="project-num">[ 04 ] / Contributor</div>
       <div class="project-spacer"></div>
       <h3 class="project-title">Steal an <em>Emoji</em></h3>
@@ -1460,7 +1467,6 @@ body.game-view .marquee-wrap { display: none; }
     <!-- Ping Pong / half width -->
     <a href="#game/pingpong" class="project project-wide" data-game="pingpong">
       <div class="project-bg" style="background-image: url('images/pingpong.jpg');"></div>
-      <div class="viz viz-line"></div>
       <div class="project-num">[ 05 ] / Contributor</div>
       <div class="project-spacer"></div>
       <h3 class="project-title">Ping<br>Pong.</h3>
@@ -1478,7 +1484,6 @@ body.game-view .marquee-wrap { display: none; }
 
     <!-- More work / full width -->
     <a href="#contact" class="project project-full">
-      <div class="viz viz-grid-pattern"></div>
       <div class="project-num">[ 06 ] / Various</div>
       <div class="project-spacer"></div>
       <h3 class="project-title">&amp; more <em>work</em></h3>
@@ -1645,9 +1650,9 @@ body.game-view .marquee-wrap { display: none; }
       <span class="count">[ 02 reviews ]</span>
     </div>
     <div class="reviews-grid">
-      <div class="review">
+      <div class="review pending">
         <div class="review-quote-mark">&ldquo;</div>
-        <p class="review-quote">[Placeholder review, replace with a real testimonial from a teammate or collaborator on this project.]</p>
+        <p class="review-quote pending">Review pending.</p>
         <div class="review-author">
           <div class="review-avatar">A</div>
           <div class="review-meta">
@@ -1656,9 +1661,9 @@ body.game-view .marquee-wrap { display: none; }
           </div>
         </div>
       </div>
-      <div class="review">
+      <div class="review pending">
         <div class="review-quote-mark">&ldquo;</div>
-        <p class="review-quote">[Placeholder review, replace with a real testimonial from a teammate or collaborator on this project.]</p>
+        <p class="review-quote pending">Review pending.</p>
         <div class="review-author">
           <div class="review-avatar">B</div>
           <div class="review-meta">
@@ -1723,9 +1728,9 @@ body.game-view .marquee-wrap { display: none; }
       <span class="count">[ 02 reviews ]</span>
     </div>
     <div class="reviews-grid">
-      <div class="review">
+      <div class="review pending">
         <div class="review-quote-mark">&ldquo;</div>
-        <p class="review-quote">[Placeholder review, replace with a real testimonial from a teammate or collaborator on this project.]</p>
+        <p class="review-quote pending">Review pending.</p>
         <div class="review-author">
           <div class="review-avatar">A</div>
           <div class="review-meta">
@@ -1734,9 +1739,9 @@ body.game-view .marquee-wrap { display: none; }
           </div>
         </div>
       </div>
-      <div class="review">
+      <div class="review pending">
         <div class="review-quote-mark">&ldquo;</div>
-        <p class="review-quote">[Placeholder review, replace with a real testimonial from a teammate or collaborator on this project.]</p>
+        <p class="review-quote pending">Review pending.</p>
         <div class="review-author">
           <div class="review-avatar">B</div>
           <div class="review-meta">
@@ -1801,9 +1806,9 @@ body.game-view .marquee-wrap { display: none; }
       <span class="count">[ 02 reviews ]</span>
     </div>
     <div class="reviews-grid">
-      <div class="review">
+      <div class="review pending">
         <div class="review-quote-mark">&ldquo;</div>
-        <p class="review-quote">[Placeholder review, replace with a real testimonial from a teammate or collaborator on this project.]</p>
+        <p class="review-quote pending">Review pending.</p>
         <div class="review-author">
           <div class="review-avatar">A</div>
           <div class="review-meta">
@@ -1812,9 +1817,9 @@ body.game-view .marquee-wrap { display: none; }
           </div>
         </div>
       </div>
-      <div class="review">
+      <div class="review pending">
         <div class="review-quote-mark">&ldquo;</div>
-        <p class="review-quote">[Placeholder review, replace with a real testimonial from a teammate or collaborator on this project.]</p>
+        <p class="review-quote pending">Review pending.</p>
         <div class="review-author">
           <div class="review-avatar">B</div>
           <div class="review-meta">
@@ -1879,9 +1884,9 @@ body.game-view .marquee-wrap { display: none; }
       <span class="count">[ 02 reviews ]</span>
     </div>
     <div class="reviews-grid">
-      <div class="review">
+      <div class="review pending">
         <div class="review-quote-mark">&ldquo;</div>
-        <p class="review-quote">[Placeholder review, replace with a real testimonial from a teammate or collaborator on this project.]</p>
+        <p class="review-quote pending">Review pending.</p>
         <div class="review-author">
           <div class="review-avatar">A</div>
           <div class="review-meta">
@@ -1890,9 +1895,9 @@ body.game-view .marquee-wrap { display: none; }
           </div>
         </div>
       </div>
-      <div class="review">
+      <div class="review pending">
         <div class="review-quote-mark">&ldquo;</div>
-        <p class="review-quote">[Placeholder review, replace with a real testimonial from a teammate or collaborator on this project.]</p>
+        <p class="review-quote pending">Review pending.</p>
         <div class="review-author">
           <div class="review-avatar">B</div>
           <div class="review-meta">
@@ -1957,9 +1962,9 @@ body.game-view .marquee-wrap { display: none; }
       <span class="count">[ 02 reviews ]</span>
     </div>
     <div class="reviews-grid">
-      <div class="review">
+      <div class="review pending">
         <div class="review-quote-mark">&ldquo;</div>
-        <p class="review-quote">[Placeholder review, replace with a real testimonial from a teammate or collaborator on this project.]</p>
+        <p class="review-quote pending">Review pending.</p>
         <div class="review-author">
           <div class="review-avatar">A</div>
           <div class="review-meta">
@@ -1968,9 +1973,9 @@ body.game-view .marquee-wrap { display: none; }
           </div>
         </div>
       </div>
-      <div class="review">
+      <div class="review pending">
         <div class="review-quote-mark">&ldquo;</div>
-        <p class="review-quote">[Placeholder review, replace with a real testimonial from a teammate or collaborator on this project.]</p>
+        <p class="review-quote pending">Review pending.</p>
         <div class="review-author">
           <div class="review-avatar">B</div>
           <div class="review-meta">
@@ -2078,19 +2083,37 @@ body.game-view .marquee-wrap { display: none; }
     resetTimer = setTimeout(() => { link.textContent = 'Discord'; }, 2000);
   });
 })();
+// Disable browser's automatic scroll restoration on reload
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
+
 // Hash-based router for game detail pages
 (function () {
   const pages = document.querySelectorAll('.game-page');
   const body = document.body;
   const html = document.documentElement;
 
-  // Performs an instant scroll-to-top, bypassing CSS scroll-behavior: smooth
+  // Performs a hard, instant scroll-to-top regardless of CSS scroll-behavior.
+  // Applies the jump multiple times across frames to defeat any race with
+  // browser-native scroll restoration or fragment-navigation scrolling.
   function jumpToTop() {
     const prev = html.style.scrollBehavior;
     html.style.scrollBehavior = 'auto';
-    window.scrollTo(0, 0);
+
+    const reset = () => {
+      window.scrollTo(0, 0);
+      html.scrollTop = 0;
+      body.scrollTop = 0;
+    };
+
+    reset();
     requestAnimationFrame(() => {
-      html.style.scrollBehavior = prev;
+      reset();
+      requestAnimationFrame(() => {
+        reset();
+        html.style.scrollBehavior = prev;
+      });
     });
   }
 
@@ -2098,7 +2121,6 @@ body.game-view .marquee-wrap { display: none; }
     const hash = window.location.hash;
     const match = hash.match(/^#game\/(\w+)$/);
 
-    // Hide all game pages first
     pages.forEach(p => p.classList.remove('active'));
 
     if (match) {
@@ -2112,14 +2134,32 @@ body.game-view .marquee-wrap { display: none; }
       }
     }
 
-    // No match → main view
     body.classList.remove('game-view');
   }
 
   window.addEventListener('hashchange', applyRoute);
 
-  // Run on load
+  // Run on initial load - covers reloads, direct URLs, and back/forward
   applyRoute();
+  // Also force a top jump if we're not on a game page (handles reloads at any scroll position)
+  if (!body.classList.contains('game-view')) {
+    jumpToTop();
+  }
+  // Catch any late scroll restoration that happens after our initial jump
+  window.addEventListener('load', jumpToTop);
+
+  // Intercept clicks on project card links to fully control navigation.
+  // Prevents the browser's default fragment scroll from racing our jumpToTop.
+  document.addEventListener('click', (e) => {
+    const link = e.target.closest('a[href^="#game/"]');
+    if (!link) return;
+    e.preventDefault();
+    const href = link.getAttribute('href');
+    if (window.location.hash !== href) {
+      history.pushState(null, '', href);
+    }
+    applyRoute();
+  });
 
   // Handle "back to portfolio" buttons
   document.querySelectorAll('[data-action="back-home"]').forEach(btn => {
@@ -2139,8 +2179,6 @@ body.game-view .marquee-wrap { display: none; }
       history.pushState('', document.title, window.location.pathname);
       body.classList.remove('game-view');
       pages.forEach(p => p.classList.remove('active'));
-      // Jump instantly first to clear any leftover scroll position from the game page,
-      // then smooth-scroll to the contact section once layout settles.
       jumpToTop();
       requestAnimationFrame(() => {
         const contact = document.getElementById('contact');
@@ -2148,6 +2186,9 @@ body.game-view .marquee-wrap { display: none; }
       });
     });
   });
+
+  // Sync route on browser back/forward navigation (popstate)
+  window.addEventListener('popstate', applyRoute);
 })();
 
 // Logo click → scroll to top (and exit game view if applicable)
